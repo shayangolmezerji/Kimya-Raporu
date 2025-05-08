@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kimya Deney Raporu - Yunus çalışkan</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+            color: #333;
+            line-height: 1.8;
+            overflow-x: hidden;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background-color: transparent;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out, visibility 1s ease-out;
+        }
+
+        .container.loaded {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+            color: #0056b3;
+            margin-top: 35px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.8rem;
+            color: #003366;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #c5d9e8;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-top: 50px;
+            border-bottom-color: #ebf4ff;
+        }
+
+        h2 i {
+            margin-right: 10px;
+        }
+
+        h3 {
+            font-size: 1.6rem;
+            margin-top: 35px;
+            font-weight: 600;
+            color: #007bff;
+            border-bottom: none;
+        }
+
+        .report-section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-left: 6px solid #4299e1;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .report-section:nth-child(1) { border-left-color: #4299e1; }
+        .report-section:nth-child(2) { border-left-color: #f56565; }
+        .report-section:nth-child(3) { border-left-color: #48bb78; }
+        .report-section:nth-child(4) { border-left-color: #ed8936; }
+        .report-section:nth-child(5) { border-left-color: #9f7aea; }
+        .report-section:nth-child(6) { border-left-color: #00bcd4; }
+        .report-section:nth-child(7) { border-left-color: #ffcc00; }
+
+        .report-section p, .report-section ul, .report-section table {
+            margin-bottom: 20px;
+        }
+
+        .report-section p:hover,
+        .report-section strong:hover {
+             color: #007bff;
+             transition: color 0.2s ease;
+        }
+
+        li:hover {
+            color: #007bff;
+            transform: translateX(5px);
+        }
+
+        strong {
+            color: #007bff;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        th, td {
+            border: 1px solid #ebf4ff;
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #e2f3ff;
+            color: #0056b3;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f7fafd;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        td {
+            color: #555;
+        }
+
+        ul {
+            padding-left: 35px;
+            list-style: disc;
+            color: #444;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 8px;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .placeholder {
+            color: #666;
+        }
+
+        .note {
+            margin-top: 60px;
+            padding: 25px;
+            background-color: #fff9e6;
+            border-left: 6px solid #ffcc00;
+            color: #664d03;
+            border-radius: 10px;
+            font-style: italic;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f0f4f8;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.8s ease-out;
+            pointer-events: all;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .beaker-animation {
+            width: 100px;
+            height: 120px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .beaker-body {
+            width: 80px;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 2px solid #ccc;
+            border-bottom: none;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .beaker-base {
+            width: 100px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 5px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .beaker-liquid {
+            width: 76px;
+            height: 70px;
+            background: linear-gradient(to top, #00aaff, #007bff);
+            position: absolute;
+            bottom: 20px;
+            left: 12px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            animation: bubble-up 2s ease-in infinite;
+        }
+
+        .bubble:nth-child(1) { left: 40%; width: 7px; height: 7px; animation-delay: 0s; }
+        .bubble:nth-child(2) { left: 60%; width: 9px; height: 9px; animation-delay: 0.5s; }
+        .bubble:nth-child(3) { left: 30%; width: 6px; height: 6px; animation-delay: 1s; }
+        .bubble:nth-child(4) { left: 70%; width: 10px; height: 10px; animation-delay: 1.5s; }
+        .bubble:nth-child(5) { left: 55%; width: 7px; height: 7px; animation-delay: 2s; }
+        .bubble:nth-child(6) { left: 45%; width: 8px; height: 8px; animation-delay: 2.5s; }
+        .bubble:nth-child(7) { left: 50%; width: 8px; height: 8px; animation-delay: 1.2s; }
+
+
+        @keyframes bubble-up {
+            0% { bottom: 5px; opacity: 0.6; transform: translateX(-50%) scale(0.8); }
+            50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+            100% { bottom: 65px; opacity: 0; transform: translateX(-50%) scale(1.2); }
+        }
+
+        .loading-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            color: #0056b3;
+            margin-top: 20px;
+            letter-spacing: 2px;
+            animation: text-fade-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes text-fade-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .trail {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: rgba(0, 123, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            animation: fade-out-trail 1s ease-out forwards;
+        }
+
+        @keyframes fade-out-trail {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0.1); opacity: 0; }
+        }
+
+
+        .swiper-container {
+            width: 100%;
+            height: 400px;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        .swiper-slide img {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #007bff !important;
+        }
+
+        .swiper-pagination-bullet-active {
+            background-color: #007bff !important;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.6rem; }
+            h3 { font-size: 1.3rem; }
+            .container { padding: 25px; margin: 15px; }
+            .report-section { padding: 20px; margin-bottom: 40px; }
+            .beaker-animation { width: 80px; height: 100px; }
+            .beaker-body { width: 60px; height: 80px; left: 10px;}
+            .beaker-base { width: 80px; height: 15px; left: 0;}
+            .beaker-liquid { width: 56px; height: 50px; bottom: 15px; left: 12px;}
+            @keyframes bubble-up {
+                0% { bottom: 5px; opacity: 0.6; transform: translateX(-50%) scale(0.8); }
+                50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+                100% { bottom: 45px; opacity: 0; transform: translateX(-50%) scale(1.2); }
+            }
+            .loading-text { font-size: 1.3rem; }
+            th, td { padding: 10px; }
+            ul { padding-left: 25px; }
+            .swiper-container { height: 300px; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.4rem; }
+            h3 { font-size: 1.1rem; }
+            .container { padding: 15px; margin: 10px; }
+            .report-section { padding: 15px; margin-bottom: 30px; }
+            .beaker-animation { width: 60px; height: 80px; }
+            .beaker-body { width: 45px; height: 65px; left: 7.5px;}
+            .beaker-base { width: 60px; height: 12px; left: 0;}
+            .beaker-liquid { width: 41px; height: 35px; bottom: 12px; left: 9.5px;}
+             @keyframes bubble-up {
+                0% { bottom: 5px; opacity: 0.6; transform: translateX(-50%) scale(0.8); }
+                50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+                100% { bottom: 30px; opacity: 0; transform: translateX(-50%) scale(1.2); }
+            }
+            .loading-text { font-size: 1rem; }
+            th, td { padding: 8px; font-size: 0.9rem; }
+            ul { padding-left: 20px; }
+            .swiper-container { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <div class="loading-screen" id="loading-screen">
+        <div class="beaker-animation">
+            <div class="beaker-liquid">
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+            </div>
+            <div class="beaker-body"></div>
+            <div class="beaker-base"></div>
+        </div>
+        <div class="loading-text">Kimya Raporu Yükleniyor...</div>
+    </div>
+
+    <div class="container" id="main-content">
+        <h1>Kimya Deney Raporları</h1>
+
+        <div class="report-section" data-aos="fade-up">
+            <h2><i class="fas fa-info-circle"></i> DENEY RAPORU - Genel Bilgiler</h2>
+            <p><strong>ÖĞRENCİNİN ADI-SOYADI:</strong> Yunus çalışkan</p>
+            <p><strong>SINIF- NO:</strong> 9/B - 1038</p>
+            <p><strong>DENEY TARİHİ:</strong> 1 Mayıs 2025</p>
+        </div>
+
+        <div class="report-section" data-aos="fade-up">
+            <h2><i class="fas fa-flask"></i> VISKOZITE DENEYI</h2>
+            <p><strong>DENEYİN ADI:</strong> Viskozite Deneyi</p>
+            <p><strong>DENEYİN AMACI:</strong> Farklı sıvıların akışkanlıklarını karşılaştırarak viskozite kavramını anlamak.</p>
+
+            <h3>DENEYDE KULLANILAN MALZEMELER:</h3>
+            <ul>
+                <li>Bir kağıt veya düz tabak</li>
+                <li>Kitap veya benzeri bir cisim (eğim oluşturmak için)</li>
+                <li>Farklı sıvılar (pekmez, reçel, tahin)</li>
+                <li>Kronometre</li>
+                <li>Fotoğraf çekmek için telefon veya kamera</li>
+            </ul>
+
+            <h3>DENEYİN YAPILIŞI:</h3>
+            <ol>
+                <li>Bir kağıdı veya düz tabağı, altına bir kitap koyarak eğik bir düzlem oluşturun.</li>
+                <li>Her sıvıdan bir tatlı kaşığı alarak eğik düzlemin üst kısmından dökün (her seferinde yeni bir kağıt veya alanı temizleyerek).</li>
+                <li>Kronometreyi çalıştırarak sıvının, düzlemin alt kısmına çizdiğiniz veya hayali belirlediğiniz bir çizgiye kadar ne kadar sürede aktığını gözlemleyin ve süreyi not alın.</li>
+                <li>Deney sırasında fotoğraf çekin. Fotoğrafta adınızın yazılı olduğu kağıdın görünür olmasına dikkat edin.</li>
+            </ol>
+
+            <h3>DENEYİN SONUCU - GÖZLEM:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sıvının Adı</th>
+                        <th>Akış Süresi (saniye)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Pekmez</td><td>29.74</td></tr>
+                    <tr><td>Reçel</td><td>31.96</td></tr>
+                    <tr><td>Tahin</td><td>46.10</td></tr>
+                </tbody>
+            </table>
+            <br>
+            <p>Deneyden yararlanarak kullandığınız sıvıların akışkanlığını büyükten küçüğe doğru sıralayın:</p>
+            <p>Pekmez > Reçel > Tahin</p>
+
+            <p>Akışkanlığı en fazla olan sıvı hangisidir?</p>
+            <p>Pekmez</p>
+
+            <p>Viskozitesi en fazla olan sıvı hangisidir?</p>
+            <p>Tahin</p>
+
+            <h3>VISKOZİTE:</h3>
+            <p>Viskozite, sıvıların akışkanlığa karşı gösterdiği iç dirençtir. Akışkanlık ne kadar azsa, viskozite o kadar yüksektir. Deneyde akış süresi uzun olan sıvıların viskozitesinin daha yüksek olduğu gözlemlenmiştir. Örneğin, tahin gibi viskozitesi yüksek sıvıların eğik düzlemde daha yavaş aktığı görülmüştür.</p>
+        </div>
+
+        <div class="report-section" data-aos="fade-up">
+            <h2><i class="fas fa-thermometer-half"></i> SICAKLIĞIN VISKOZİTEYE ETKİSİ DENEYİ</h2>
+            <p><strong>DENEYİN ADI:</strong> Sıcaklığın Viskoziteye Etkisi Deneyi</p>
+            <p><strong>DENEYİN AMACI:</strong> Sıcaklığın sıvıların viskozitesi üzerindeki etkisini incelemek.</p>
+
+            <h3>DENEYDE KULLANILAN MALZEMELER:</h3>
+            <ul>
+                <li>Bal</li>
+                <li>Isıtma veya soğutma kaynağı (sıcak/soğuk su banyosu, buzdolabı)</li>
+                <li>Kaşık</li>
+                <li>Fotoğraf çekmek için telefon veya kamera</li>
+            </ul>
+
+            <h3>DENEYİN YAPILIŞI:</h3>
+            <p>Evde bulunan bal malzemesini kullanarak sıcaklığın viskoziteye etkisini inceleyen bir deney tasarladım. Balı üç farklı sıcaklıkta (buzdolabı soğukluğu, oda sıcaklığı, sıcak su banyosunda ısıtılmış) akışkanlıkları açısından karşılaştırdım.</p>
+            <p>Deney sırasında fotoğraf çekin. Fotoğrafta adınızın yazılı olduğu kağıdın görünür olmasına dikkat edin.</p>
+            <p><strong>Tasarlanan Deney Adımları:</strong></p>
+            <ol>
+                <li>Balı üç ayrı küçük kaba paylaştırdım.</li>
+                <li>Birinci kabı buzdolabında (5°C), ikinci kabı oda sıcaklığında (20°C), üçüncü kabı ise ılık (40°C) su dolu bir kaba oturtarak bir süre beklettim.</li>
+                <li>Her bir kaptaki balı bir kaşık yardımıyla alıp aynı yükseklikten akıtarak akış hızlarını gözlemledim ve karşılaştırdım.</li>
+                <li>Gözlemlerimi not aldım ve farklı sıcaklıklardaki balın fotoğraflarını çektim.</li>
+            </ol>
+
+            <h3>DENEYİN SONUCU - GÖZLEM:</h3>
+            <p>Deneyinizde kullandığınız malzeme sıcaklık arttığında nasıl bir değişim gösterdi?</p>
+            <p>Sıcak bal (40°C), soğuk bala (5°C) göre çok daha hızlı ve kolay aktı. Oda sıcaklığındaki (20°C) balın akış hızı, soğuk baldan hızlı, sıcak baldan yavaş oldu. Sıcaklık arttıkça balın akışkanlığının arttığı net bir şekilde gözlemlendi.</p>
+
+            <p>Deneyinize göre viskozite ile sıcaklık arasındaki ilişkiyi yazınız.</p>
+            <p>Sıcaklık arttıkça sıvıların viskozitesi azalır. Yani sıvı ısındıkça daha akışkan hale gelir. Bunun nedeni, artan sıcaklığın moleküllerin kinetik enerjisini artırması ve birbirleri üzerindeki sürtünmeyi azaltmasıdır.</p>
+
+            <p>Deneyinizde sıcaklık, kullandığınız malzemenin akışkanlığını nasıl etkiledi?</p>
+            <p>Sıcaklık artışı, balın akışkanlığını doğrudan etkiledi ve sıcaklık artışıyla akışkanlık belirgin şekilde arttı. Soğuk balın katılaşmaya yakın olması yüksek viskoziteye, sıcak balın daha sıvı olması ise düşük viskoziteye işaret eder.</p>
+        </div>
+
+        <div class="report-section" data-aos="fade-up">
+            <h2><i class="fas fa-water"></i> YÜZEY GERİLİMİ DENEYİ</h2>
+            <p><strong>DENEYİN ADI:</strong> Yüzey Gerilimi Deneyi</p>
+            <p><strong>DENEYİN AMACI:</strong> Suyun yüzey gerilimi özelliğini gözlemlemek ve anlamak.</p>
+
+            <h3>DENEYDE KULLANILAN MALZEMELER:</h3>
+            <ul>
+                <li>Yemek tabağı</li>
+                <li>Su</li>
+                <li>Karabiber</li>
+                <li>Sıvı sabun</li>
+            </ul>
+
+            <h3>DENEYİN YAPILIŞI:</h3>
+            <ol>
+                <li>Yemek tabağına su doldurdum ve yüzeyine dikkatlice karabiber serpiştirdim. Karabiberin su yüzeyinde kaldığını gözlemledim.</li>
+                <li>Parmağımı tabağın ortasına batırdım, karabiberin dağılmadığını veya çok az hareket ettiğini gördüm.</li>
+                <li>Parmağımın ucuna bir damla sıvı sabun sürdüm ve sonra yine parmağımı suyun ortasına batırdım.</li>
+            </ol>
+            <p>Deney sırasında fotoğraf çekin. Fotoğrafta adınızın yazılı olduğu kağıdın görünür olmasına dikkat edin.</p>
+
+            <h3>DENEYİN SONUCU - GÖZLEM:</h3>
+            <p>Karabiberde nasıl bir değişiklik oldu?</p>
+            <p>Sabunlu parmağımı suya batırdığım anda, su yüzeyinde duran karabiber tanecikleri hızla tabağın kenarlarına doğru dağıldı. Bu etki oldukça ani ve belirgindi.</p>
+
+            <h3>YÜZEY GERİLİMİ:</h3>
+            <p>Yüzey gerilimi, sıvı moleküllerinin birbirini çekme kuvveti (kohezyon) nedeniyle sıvı yüzeyinin gergin bir zar gibi davranmasıdır. Bu gerilim, karabiber gibi hafif nesnelerin su yüzeyinde yüzmesini sağlar. Sabun, su molekülleri arasındaki kohezyon kuvvetini azaltarak yüzey gerilimini düşürür, bu da karabiberin dağılmasına neden olur.</p>
+        </div>
+
+        <div class="report-section" data-aos="fade-up">
+            <h2><i class="fas fa-images"></i> PROJE FOTOĞRAFLARI</h2>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="1-1.jpg" alt="1 Deney Fotoğrafı 1 - 3"></div>
+                    <div class="swiper-slide"><img src="1-2.jpg" alt="1 Deney Fotoğrafı 2 - 3"></div>
+                    <div class="swiper-slide"><img src="1-3.jpg" alt="1 Deney Fotoğrafı 3 - 3"></div>
+                    <div class="swiper-slide"><img src="2-1.jpg" alt="2 Deney Fotoğrafı 1 - 3"></div>
+                    <div class="swiper-slide"><img src="2-2.jpg" alt="2 Deney Fotoğrafı 2 - 3"></div>
+                    <div class="swiper-slide"><img src="2-3.jpg" alt="2 Deney Fotoğrafı 3 - 3"></div>
+                    <div class="swiper-slide"><img src="3-1.jpg" alt="3 Deney Fotoğrafı 1 - 3"></div>
+                    <div class="swiper-slide"><img src="3-2.jpg" alt="3 Deney Fotoğrafı 2 - 3"></div>
+                    <div class="swiper-slide"><img src="3-3.jpg" alt="3 Deney Fotoğrafı 3 - 3"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+
+        <div class="report-section" data-aos="fade-up">
+            <h2><i class="fas fa-clipboard-check"></i> ÖDEV DEĞERLENDİRME KRİTERLERİ</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Kriter</th>
+                        <th>Puan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Deney raporları yazılmış mı?</td><td>20</td></tr>
+                    <tr><td>Sorular doğru cevaplanmış mı?</td><td>20</td></tr>
+                    <tr><td>Deneyler doğru uygulanmış mı?</td><td>10</td></tr>
+                    <tr><td>Deney sonucu ve gözlemler doğru mu?</td><td>10</td></tr>
+                    <tr><td>Kavramlar doğru tanımlanmış mı?</td><td>20</td></tr>
+                    <tr><td>Ödevin temizlik ve düzeni</td><td>10</td></tr>
+                    <tr><td>Zamanında teslim</td><td>10</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="note" data-aos="fade-up">
+            <p><strong>NOT:</strong> 9 MAYIS 2025 CUMA GÜNÜNE KADAR ÖDEVİNİZİ TESLİM EDİNİZ.</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {"value": 100, "density": {"enable": true, "value_area": 800}},
+                        "color": {"value": "#aaccff"},
+                        "shape": {"type": "circle", "stroke": {"width": 0, "color": "#000000"}, "polygon": {"nb_sides": 5}},
+                        "opacity": {"value": 0.6, "random": true, "anim": {"enable": true, "speed": 1, "opacity_min": 0.1, "sync": false}},
+                        "size": {"value": 4, "random": true, "anim": {"enable": false, "speed": 40, "size_min": 0.1, "sync": false}},
+                        "line_linked": {"enable": true, "distance": 150, "color": "#c5d9e8", "opacity": 0.4, "width": 1},
+                        "move": {"enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false}
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {"onhover": {"enable": true, "mode": ["grab", "bubble"]}, "onclick": {"enable": true, "mode": "repulse"}, "resize": true},
+                        "modes": {
+                            "grab": {"distance": 140, "line_linked": {"opacity": 1}},
+                            "bubble": {"distance": 200, "size": 10, "duration": 0.5, "opacity": 0.8, "speed": 2},
+                            "repulse": {"distance": 100, "duration": 0.4},
+                            "push": {"particles_nb": 4},
+                            "remove": {"particles_nb": 2}
+                        }
+                    },
+                    "retina_detect": true
+                });
+            } else {
+            }
+
+            const loadingScreen = document.getElementById('loading-screen');
+            const mainContent = document.getElementById('main-content');
+            const reportSections = document.querySelectorAll('.report-section');
+
+            const loadingDuration = 3000;
+
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                loadingScreen.addEventListener('transitionend', () => {
+                    loadingScreen.style.display = 'none';
+                    mainContent.style.visibility = 'visible';
+                    mainContent.classList.add('loaded');
+
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+
+                            if (typeof AOS !== 'undefined') {
+                                AOS.init({
+                                    duration: 800,
+                                    easing: 'ease-in-out',
+                                    once: true
+                                });
+                            } else {
+                            }
+
+                            if (typeof Swiper !== 'undefined') {
+                                const mySwiper = new Swiper('.swiper-container', {
+                                    loop: true,
+                                    pagination: {
+                                        el: '.swiper-pagination',
+                                        clickable: true
+                                    },
+                                    navigation: {
+                                        nextEl: '.swiper-button-next',
+                                        prevEl: '.swiper-button-prev'
+                                    },
+                                    autoplay: {
+                                        delay: 3000,
+                                        disableOnInteraction: false
+                                    },
+                                });
+
+                                setTimeout(() => {
+                                     mySwiper.update();
+                                }, 500);
+
+                            } else {
+                            }
+                        });
+                    });
+
+                }, { once: true });
+
+            }, loadingDuration);
+        });
+    </script>
+</body>
+</html>
